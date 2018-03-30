@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.yoelfebryan.feedme">
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".UI.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".UI.LoginActivity" />
+        <activity android:name=".CRUD.RegisterActivity" />
+        <activity android:name=".UI.MenuActivity" />
+        <activity android:name=".CRUD.UpdateProfileActivity" />
+        <activity android:name=".CRUD.LihatProfileActivity" />
+        <activity android:name=".UI.MenuSellerActivity" />
+        <activity android:name=".CRUD.LihatPSellerActivity" />
+        <activity android:name=".CRUD.UpdatePSellerActivity" />
+        <activity android:name=".CRUD.AddItemAcitivity" />
+        <activity
+            android:name=".CRUD.ItemListActivity"
+            android:parentActivityName=".CRUD.AddItemAcitivity" />
+        <activity android:name=".CRUD.UpdateItemActivity"></activity>
+    </application>
+
+</manifest>
