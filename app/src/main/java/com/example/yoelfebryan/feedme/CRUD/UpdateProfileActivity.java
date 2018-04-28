@@ -15,7 +15,7 @@ import com.example.yoelfebryan.feedme.R;
 public class UpdateProfileActivity extends AppCompatActivity {
     protected Cursor cursor;
     DatabaseHelper databaseHelper;
-    Button btn1, btn2;
+    Button btn1;
     EditText text1, text2, text3, text4, text5;
 
     @Override
@@ -30,7 +30,6 @@ public class UpdateProfileActivity extends AppCompatActivity {
         text4 = (EditText) findViewById(R.id.editText4);
         text5 = (EditText) findViewById(R.id.editText5);
         btn1 = (Button) findViewById(R.id.button1);
-        btn2 = (Button) findViewById(R.id.button2);
 
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
         cursor = db.rawQuery("SELECT * FROM customer WHERE nama = '" + getIntent().getStringExtra("user") + "'",null);
@@ -56,13 +55,6 @@ public class UpdateProfileActivity extends AppCompatActivity {
                         text5.getText().toString() + "' where id='" +
                         text1.getText().toString()+"'");
                 Toast.makeText(getApplicationContext(),"Update Berhasil",Toast.LENGTH_SHORT).show();
-                finish();
-            }
-        });
-
-        btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
                 finish();
             }
         });

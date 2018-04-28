@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.yoelfebryan.feedme.DBHelper.DatabaseHelper;
@@ -20,6 +21,7 @@ import com.example.yoelfebryan.feedme.R;
 
 import java.util.ArrayList;
 
+
 /**
  * Created by Yoel Febryan on 29/03/2018.
  */
@@ -27,9 +29,10 @@ import java.util.ArrayList;
 public class ItemListActivity extends AppCompatActivity {
     protected Cursor cursor;
     DatabaseHelper databaseHelper;
-    GridView gridView;
+    ListView gridView;
     ArrayList<Item> list;
     ItemListAdapter adapter = null;
+    String nama,alamat,nohp;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,13 +40,13 @@ public class ItemListActivity extends AppCompatActivity {
         setContentView(R.layout.item_list_activity);
 
         databaseHelper = new DatabaseHelper(this);
-        gridView = (GridView) findViewById(R.id.gridview);
+        gridView = (ListView) findViewById(R.id.gridview);
         list = new ArrayList<>();
         adapter = new ItemListAdapter(this, R.layout.list_item, list);
         gridView.setAdapter(adapter);
 
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
-        cursor = db.rawQuery("SELECT * FROM item",null);
+        cursor = db.rawQuery("SELECT * FROM item WHERE id_seller = '" + getIntent().getStringExtra("id") + "'",null);
         list.clear();
         while (cursor.moveToNext()){
             int id = cursor.getInt(0);
@@ -56,33 +59,19 @@ public class ItemListActivity extends AppCompatActivity {
         }
         adapter.notifyDataSetChanged();
 
-        gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, final long id) {
-                CharSequence[] items = {"Update", "Delete"};
-                AlertDialog.Builder dialog = new AlertDialog.Builder(ItemListActivity.this);
+        nama = getIntent().getStringExtra("id_cust");
+        alamat = getIntent().getStringExtra("alamat");
+        nohp = getIntent().getStringExtra("nohp");
 
-                dialog.setTitle("Choose an action");
-                dialog.setItems(items, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (which == 0){
-                            SQLiteDatabase db = databaseHelper.getReadableDatabase();
-                            Cursor c = db.rawQuery("SELECT id_item from item",null);
-                            ArrayList<Integer> arrID = new ArrayList<Integer>();
-                            while (c.moveToNext()){
-                                arrID.add(c.getInt(0));
-                            }
-                            Intent intent = new Intent(ItemListActivity.this,UpdateItemActivity.class);
-                            intent.putExtra("id",arrID);
-                            startActivity(intent);
-                        }else {
-                            Toast.makeText(getApplicationContext(),"Deleted",Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-                dialog.show();
-                return true;
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(ItemListActivity.this,ClickItemActivity.class);
+                intent.putExtra("id",String.valueOf(id));
+                intent.putExtra("id_cust",nama);
+                intent.putExtra("alamat",alamat);
+                intent.putExtra("nohp",nohp);
+                startActivity(intent);
             }
         });
     }

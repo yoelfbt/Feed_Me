@@ -41,8 +41,7 @@ public class ItemListAdapter extends BaseAdapter {
     }
 
     @Override
-    public long getItemId(int position) {
-        return position;
+    public long getItemId(int position) {return itemlist.get(position).getId();
     }
 
     private class ViewHolder{
@@ -62,7 +61,7 @@ public class ItemListAdapter extends BaseAdapter {
             holder.txtName = (TextView) row.findViewById(R.id.textView);
             holder.txtHarga = (TextView) row.findViewById(R.id.textView2);
             holder.txtDesc = (TextView) row.findViewById(R.id.textView3);
-            holder.imageView = (ImageView) row.findViewById(R.id.imageView);
+            holder.imageView = (ImageView) row.findViewById(R.id.imagefood);
             row.setTag(holder);
         }else {
             holder = (ViewHolder) row.getTag();

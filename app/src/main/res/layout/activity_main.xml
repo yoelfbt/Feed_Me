@@ -7,12 +7,7 @@
     android:orientation="vertical"
     tools:context="com.example.yoelfebryan.feedme.UI.MainActivity">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Happy Inc"
-        android:textSize="50dp"
-        android:gravity="center"/>
+
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="200dp"

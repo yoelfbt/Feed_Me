@@ -11,18 +11,20 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper{
     private static final String DATABASE_NAME = "FeedMe.db";
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
     public DatabaseHelper (Context context){super(context,DATABASE_NAME,null,DATABASE_VERSION);}
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         String tb1 = "create table customer(id integer primary key autoincrement,nama text null,nohp text null,alamat text null,password text null);";
         String tb2 = "create table seller(id_toko integer primary key autoincrement,nama_toko text null,nohp_toko text null,alamat_toko text null,password_toko text null);";
-        String tb3 = "create table item(id_item integer primary key autoincrement, name text null, harga integer null, desc text null, image blog, id_seller integer, foreign key(id_seller) references seller(id_toko))";
+        String tb3 = "create table item(id_item integer primary key autoincrement, name text null, harga integer null, desc text null, image blob, id_seller integer, foreign key(id_seller) references seller(id_toko))";
+        String tb4 = "create table cart(id_cart integer primary key autoincrement, name text null, harga integer null, desc text null,image blob, qty integer null,total integer null,keterangan text null,alamat text null, nohp text null, id_customer integer, id_seller integer, foreign key(alamat) references customer(alamat), foreign key(nohp) references customer(nohp), foreign key(id_customer) references customer(id), foreign key(id_seller) references seller(id_toko))";
 
         db.execSQL(tb1);
         db.execSQL(tb2);
         db.execSQL(tb3);
+        db.execSQL(tb4);
     }
 
     @Override
@@ -30,10 +32,12 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         String tb1 = "drop table if exists customer";
         String tb2 = "drop table if exists seller";
         String tb3 = "drop table if exists item";
+        String tb4 = "drop table if exists cart";
 
         db.execSQL(tb3);
         db.execSQL(tb1);
         db.execSQL(tb2);
+        db.execSQL(tb4);
 
         onCreate(db);
     }

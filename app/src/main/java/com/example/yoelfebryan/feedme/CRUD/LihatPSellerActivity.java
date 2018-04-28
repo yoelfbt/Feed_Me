@@ -1,5 +1,6 @@
 package com.example.yoelfebryan.feedme.CRUD;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.yoelfebryan.feedme.DBHelper.DatabaseHelper;
 import com.example.yoelfebryan.feedme.R;
+import com.example.yoelfebryan.feedme.UI.LoginActivity;
 
 public class LihatPSellerActivity extends AppCompatActivity {
     protected Cursor cursor;
@@ -45,6 +47,8 @@ public class LihatPSellerActivity extends AppCompatActivity {
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(intent);
                 finish();
             }
         });

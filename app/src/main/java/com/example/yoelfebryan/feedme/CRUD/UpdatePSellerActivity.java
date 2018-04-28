@@ -15,7 +15,7 @@ import com.example.yoelfebryan.feedme.R;
 public class UpdatePSellerActivity extends AppCompatActivity {
     protected Cursor cursor;
     DatabaseHelper databaseHelper;
-    Button btn1, btn2;
+    Button btn1;
     EditText text1, text2, text3, text4, text5;
 
     @Override
@@ -30,13 +30,11 @@ public class UpdatePSellerActivity extends AppCompatActivity {
         text4 = (EditText) findViewById(R.id.editText4);
         text5 = (EditText) findViewById(R.id.editText5);
         btn1 = (Button) findViewById(R.id.button1);
-        btn2 = (Button) findViewById(R.id.button2);
 
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
-        cursor = db.rawQuery("SELECT * FROM seller WHERE nama_toko = '" + getIntent().getStringExtra("user") + "'",null);
+        cursor = db.rawQuery("SELECT * FROM seller WHERE nama_toko = '" + getIntent().getStringExtra("user") + "'", null);
         cursor.moveToFirst();
-        if (cursor.getCount()>0)
-        {
+        if (cursor.getCount() > 0) {
             cursor.moveToPosition(0);
             text1.setText(cursor.getString(0).toString());
             text2.setText(cursor.getString(1).toString());
@@ -49,20 +47,13 @@ public class UpdatePSellerActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 SQLiteDatabase db = databaseHelper.getWritableDatabase();
-                db.execSQL("update seller set nama_toko='"+
-                        text2.getText().toString() +"', nohp_toko='" +
-                        text3.getText().toString()+"', alamat_toko='"+
-                        text4.getText().toString() +"', password_toko='" +
+                db.execSQL("update seller set nama_toko='" +
+                        text2.getText().toString() + "', nohp_toko='" +
+                        text3.getText().toString() + "', alamat_toko='" +
+                        text4.getText().toString() + "', password_toko='" +
                         text5.getText().toString() + "' where id_toko='" +
-                        text1.getText().toString()+"'");
-                Toast.makeText(getApplicationContext(),"Update Berhasil",Toast.LENGTH_SHORT).show();
-                finish();
-            }
-        });
-
-        btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                        text1.getText().toString() + "'");
+                Toast.makeText(getApplicationContext(), "Update Berhasil", Toast.LENGTH_SHORT).show();
                 finish();
             }
         });

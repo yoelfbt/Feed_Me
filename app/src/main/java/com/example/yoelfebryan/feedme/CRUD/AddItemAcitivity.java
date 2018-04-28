@@ -55,25 +55,28 @@ public class AddItemAcitivity extends AppCompatActivity {
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
         cursor = db.rawQuery("SELECT * FROM seller where nama_toko = '" + getIntent().getStringExtra("user") + "'",null);
         cursor.moveToFirst();
-        if (cursor.getCount()>0){
-            ID.setText(cursor.getString(0).toString());
-        }
-        add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ActivityCompat.requestPermissions
-                        (AddItemAcitivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},REQUEST_CODE_GALLERY);
-            }
-        });
+        if (cursor.getCount()>0) {
+            final int id = cursor.getInt(0);
 
-        list.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(AddItemAcitivity.this, ItemListActivity.class);
-                intent.putExtra("id", String.valueOf(ID));
-                startActivity(intent);
-            }
-        });
+            ID.setText(String.valueOf(id));
+
+            add.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ActivityCompat.requestPermissions
+                            (AddItemAcitivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_GALLERY);
+                }
+            });
+
+            list.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(AddItemAcitivity.this, ItemListSellerActivity.class);
+                    intent.putExtra("id", String.valueOf(id));
+                    startActivity(intent);
+                }
+            });
+        }
 
         update.setOnClickListener(new View.OnClickListener() {
             @Override

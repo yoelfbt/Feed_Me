@@ -21,18 +21,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.yoelfebryan.feedme.DBHelper.DatabaseHelper;
+import com.example.yoelfebryan.feedme.Model.Item;
+import com.example.yoelfebryan.feedme.Model.ItemListAdapter;
 import com.example.yoelfebryan.feedme.R;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 public class UpdateItemActivity extends AppCompatActivity {
     final int REQUEST_CODE_GALLERY = 999;
     protected Cursor cursor;
-    Button add,update,list;
+    Button add,update,list,delete;
     ImageView img;
-    TextView ID;
     EditText ed1,ed2,ed3;
     DatabaseHelper databaseHelper;
 
@@ -43,39 +45,58 @@ public class UpdateItemActivity extends AppCompatActivity {
 
         add = (Button) findViewById(R.id.addimage);
         update = (Button) findViewById(R.id.button1);
+        delete = (Button)findViewById(R.id.button2);
         list = (Button) findViewById(R.id.list);
         img = (ImageView) findViewById(R.id.image);
         ed1 = (EditText)findViewById(R.id.editText1);
         ed2 = (EditText) findViewById(R.id.editText2);
         ed3 = (EditText) findViewById(R.id.editText3);
-        ID = (EditText) findViewById(R.id.id);
-        ID.setVisibility(View.INVISIBLE);
         databaseHelper = new DatabaseHelper(this);
 
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
-        cursor = db.rawQuery("SELECT * FROM item where id_item = '" + getIntent().getStringExtra("id") + "'",null);
+        cursor = db.rawQuery("SELECT * FROM item WHERE id_item = '" + getIntent().getStringExtra("id") + "'",null);
         cursor.moveToFirst();
         if (cursor.getCount()>0) {
             cursor.moveToPosition(0);
             ed1.setText(cursor.getString(1));
             ed2.setText(cursor.getString(2));
             ed3.setText(cursor.getString(3));
-            img.setImageResource(cursor.getColumnIndex("image"));
-        }
+            final int id_seller = cursor.getInt(5);
 
-        update.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SQLiteDatabase db = databaseHelper.getWritableDatabase();
-                db.execSQL("update item set name='"+
-                        ed1.getText().toString() +"', harga='" +
-                        ed2.getText().toString()+"', desc='"+
-                        ed3.getText().toString() +
-                        img.getDrawable()+"'");
-                Toast.makeText(getApplicationContext(),"Update Berhasil",Toast.LENGTH_SHORT).show();
-                finish();
-            }
-        });
+            update.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    SQLiteDatabase db = databaseHelper.getWritableDatabase();
+                    db.execSQL("update item set name='" +
+                            ed1.getText().toString() + "', harga='" +
+                            ed2.getText().toString() + "', desc='" +
+                            ed3.getText().toString() + "', id_seller='" +
+                            cursor.getInt(5) + "' where id_item='" +
+                            cursor.getString(0) + "'");
+                    Toast.makeText(getApplicationContext(), "Update Berhasil", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    SQLiteDatabase db = databaseHelper.getReadableDatabase();
+                    cursor = db.rawQuery("DELETE FROM item where id_item = '" + getIntent().getStringExtra("id") + "'", null);
+                    cursor.moveToFirst();
+                    Toast.makeText(getApplicationContext(), "Deleted Succes", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+
+            list.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(UpdateItemActivity.this, ItemListSellerActivity.class);
+                    intent.putExtra("id",String.valueOf(id_seller));
+                    startActivity(intent);
+                }
+            });
+        }
     }
 
     private byte[] imageViewToByte(ImageView imageView){

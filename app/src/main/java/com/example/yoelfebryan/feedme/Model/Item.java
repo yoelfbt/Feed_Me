@@ -20,8 +20,7 @@ public class Item {
         this.image = image;
     }
 
-    public int getId() {
-        return id;
+    public int getId() {return id;
     }
 
     public void setId(int id) {

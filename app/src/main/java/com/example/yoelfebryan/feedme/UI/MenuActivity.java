@@ -9,13 +9,15 @@ import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.yoelfebryan.feedme.CRUD.CartCustomerActivity;
 import com.example.yoelfebryan.feedme.CRUD.ItemListActivity;
 import com.example.yoelfebryan.feedme.CRUD.LihatProfileActivity;
+import com.example.yoelfebryan.feedme.CRUD.SellerListActivity;
 import com.example.yoelfebryan.feedme.CRUD.UpdateProfileActivity;
 import com.example.yoelfebryan.feedme.R;
 
 public class MenuActivity extends AppCompatActivity {
-    CardView Profile,Menu;
+    CardView Profile,Menu,Cart;
     String user;
 
     @Override
@@ -25,6 +27,7 @@ public class MenuActivity extends AppCompatActivity {
 
         Profile = (CardView)findViewById(R.id.profile);
         Menu = (CardView) findViewById(R.id.menu);
+        Cart = (CardView) findViewById(R.id.cart);
 
         user = getIntent().getStringExtra("nama");
 
@@ -57,7 +60,17 @@ public class MenuActivity extends AppCompatActivity {
         Menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MenuActivity.this, ItemListActivity.class);
+                Intent intent = new Intent(MenuActivity.this, SellerListActivity.class);
+                intent.putExtra("user",user);
+                startActivity(intent);
+            }
+        });
+
+        Cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuActivity.this, CartCustomerActivity.class);
+                intent.putExtra("user",user);
                 startActivity(intent);
             }
         });

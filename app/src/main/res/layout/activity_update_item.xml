@@ -6,6 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
     tools:context="com.example.yoelfebryan.feedme.CRUD.UpdateItemActivity">
 
     <EditText
@@ -81,17 +83,8 @@
         android:layout_centerHorizontal="true"
         android:text="add image"/>
 
-    <EditText
-        android:id="@+id/id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/addimage"
-        android:layout_centerHorizontal="true"
-        android:hint="ID"/>
-
-    <Button
+   <Button
         android:id="@+id/button1"
-        style="?android:attr/borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -101,13 +94,12 @@
 
     <Button
         android:id="@+id/button2"
-        style="?android:attr/borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:text="Kembali" />
+        android:text="Delete" />
 
     <Button
         android:id="@+id/list"
